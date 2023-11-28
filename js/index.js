@@ -39,6 +39,11 @@ renderEmotionsRadios(catsData);
 emotionRadios.addEventListener('change', highlightCheckedOption);
 
 function highlightCheckedOption(e) {
+  const radios = document.getElementsByClassName('radio');
+  for (let radio of radios) {
+    radio.classList.remove('highlight');
+  }
+
   if (e.target && e.target.matches("input[type='radio']")) {
     const optionId = e.target.id;
     document.getElementById(optionId).parentElement.classList.add('highlight');
