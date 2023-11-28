@@ -35,3 +35,12 @@ function renderEmotionsRadios(cats) {
 }
 
 renderEmotionsRadios(catsData);
+
+emotionRadios.addEventListener('change', highlightCheckedOption);
+
+function highlightCheckedOption(e) {
+  if (e.target && e.target.matches("input[type='radio']")) {
+    const optionId = e.target.id;
+    document.getElementById(optionId).parentElement.classList.add('highlight');
+  }
+}
