@@ -4,7 +4,7 @@ const emotionRadios = document.getElementById('emotion-radios');
 const getImgBtn = document.getElementById('get-image-btn');
 const gifsOnlyOption = document.getElementById('gifs-only-option');
 
-function getEmotionsArray(cats) {
+const getEmotionsArray = (cats) => {
   const emotions = [];
   for (let cat of cats) {
     for (let emotion of cat.emotionTags) {
@@ -14,9 +14,9 @@ function getEmotionsArray(cats) {
     }
   }
   return emotions;
-}
+};
 
-function renderEmotionsRadios(cats) {
+const renderEmotionsRadios = (cats) => {
   let radioItems = ``;
   const emotions = getEmotionsArray(cats);
   for (let emotion of emotions) {
@@ -34,7 +34,7 @@ function renderEmotionsRadios(cats) {
   }
 
   emotionRadios.innerHTML += radioItems;
-}
+};
 
 renderEmotionsRadios(catsData);
 
@@ -42,7 +42,7 @@ emotionRadios.addEventListener('change', highlightCheckedOption);
 
 getImgBtn.addEventListener('click', getMatchingCatsArray);
 
-function highlightCheckedOption(e) {
+const highlightCheckedOption = (e) => {
   const radios = document.getElementsByClassName('radio');
   for (let radio of radios) {
     radio.classList.remove('highlight');
@@ -52,9 +52,9 @@ function highlightCheckedOption(e) {
     const optionId = e.target.id;
     document.getElementById(optionId).parentElement.classList.add('highlight');
   }
-}
+};
 
-function getMatchingCatsArray() {
+const getMatchingCatsArray = () => {
   const checkedRadio = document.querySelector('input[type="radio"]:checked');
   if (checkedRadio) {
     const selectedEmotion = checkedRadio.value;
@@ -66,4 +66,4 @@ function getMatchingCatsArray() {
       : catsData.filter((c) => c.emotionTags.includes(selectedEmotion));
     console.log(matchingCats);
   }
-}
+};
