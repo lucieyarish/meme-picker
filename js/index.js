@@ -55,9 +55,15 @@ function highlightCheckedOption(e) {
 }
 
 function getMatchingCatsArray() {
-  const isGif = gifsOnlyOption.checked;
   const checkedRadio = document.querySelector('input[type="radio"]:checked');
   if (checkedRadio) {
-    const checkedRadioVal = checkedRadio.value;
+    const selectedEmotion = checkedRadio.value;
+    const isGif = gifsOnlyOption.checked;
+    const matchingCats = isGif
+      ? catsData.filter(
+          (c) => c.emotionTags.includes(selectedEmotion) && c.isGif
+        )
+      : catsData.filter((c) => c.emotionTags.includes(selectedEmotion));
+    console.log(matchingCats);
   }
 }
