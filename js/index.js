@@ -3,6 +3,9 @@ import { catsData } from './data.js';
 const emotionRadios = document.getElementById('emotion-radios');
 const getImgBtn = document.getElementById('get-image-btn');
 const gifsOnlyOption = document.getElementById('gifs-only-option');
+const memeModalInner = document.getElementById('meme-modal-inner');
+const memeModal = document.getElementById('meme-modal');
+const memeModalCloseBtn = document.getElementById('meme-modal-close-btn');
 
 const getEmotionsArray = (cats) => {
   const emotions = [];
@@ -36,12 +39,6 @@ const renderEmotionsRadios = (cats) => {
   emotionRadios.innerHTML += radioItems;
 };
 
-renderEmotionsRadios(catsData);
-
-emotionRadios.addEventListener('change', highlightCheckedOption);
-
-getImgBtn.addEventListener('click', getMatchingCatsArray);
-
 const highlightCheckedOption = (e) => {
   const radios = document.getElementsByClassName('radio');
   for (let radio of radios) {
@@ -64,6 +61,40 @@ const getMatchingCatsArray = () => {
           (c) => c.emotionTags.includes(selectedEmotion) && c.isGif
         )
       : catsData.filter((c) => c.emotionTags.includes(selectedEmotion));
-    console.log(matchingCats);
+    return matchingCats;
   }
 };
+
+const renderCat = () => {
+  const catObject = getSingleCatObject();
+  memeModalInner.innerHTML = `
+    <img 
+        class="cat-img" 
+        src="../assets/images/${catObject.image}"
+        alt="${catObject.alt}"
+    >
+  `;
+  memeModal.style.display = 'flex';
+};
+
+const getSingleCatObject = () => {
+  const catsArray = getMatchingCatsArray();
+  if (catsArray.length > 0) {
+    const randomCatNumber = Math.floor(Math.random() * catsArray.length);
+    return catsArray[randomCatNumber];
+  }
+};
+
+const closeModal = () => {
+  memeModal.style.display = 'none';
+};
+
+// FUNCTION CALLS
+renderEmotionsRadios(catsData);
+
+// EVENT LISTENERS
+emotionRadios.addEventListener('change', highlightCheckedOption);
+
+getImgBtn.addEventListener('click', renderCat);
+
+memeModalCloseBtn.addEventListener('click', closeModal);
